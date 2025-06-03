@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Old Money E-Commerce</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- Three.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="assets/OldMoneyLogo.png" alt="Luxury Logo" class="logo"/>
+      <span class="brand">OldMoneyMart</span>
+    </div>
+    <nav>
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#products" class="nav-link">Shop</a>
+      <a href="#about" class="nav-link">About</a>
+      <button id="theme-toggle" aria-label="Toggle theme"></button>
+      <button id="cart-btn" aria-label="View cart">
+        <span class="cart-icon">&#128722;</span>
+        <span id="cart-count">0</span>
+      </button>
+    </nav>
+  </header>
+  <main>
+    <section id="hero">
+      <div class="hero-bg"></div>
+      <h1 class="hero-title">Elevate Your Essentials</h1>
+      <p class="hero-desc">Timeless quality. Discreet luxury. Shop curated collections inspired by old money elegance.</p>
+      <a href="#products" class="btn btn-primary hero-cta">Shop Now</a>
+    </section>
+    <section id="products" class="products-section">
+      <h2>Featured Products</h2>
+      <div class="filters">
+        <input type="text" id="search-bar" placeholder="Search products..."/>
+        <select id="category-filter">
+          <option value="">All Categories</option>
+          <option value="fashion">Fashion</option>
+          <option value="home">Home</option>
+          <option value="tech">Tech</option>
+        </select>
+      </div>
+      <div id="product-grid" class="product-grid"></div>
+    </section>
+    <section id="about" class="about-section">
+      <h2>About OldMoneyMart</h2>
+      <p>
+        Inspired by iconic heritage houses, OldMoneyMart brings you a curated selection of timeless essentials. Our philosophy is rooted in understated luxury, quality, and enduring style.
+      </p>
+    </section>
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-btn" id="close-modal">&times;</span>
+        <div id="modal-details"></div>
+      </div>
+    </div>
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal hidden">
+      <div class="modal-content cart-content">
+        <span class="close-btn" id="close-cart">&times;</span>
+        <h2>Your Cart</h2>
+        <div id="cart-items"></div>
+        <div class="cart-footer">
+          <span id="cart-total"></span>
+          <button class="btn btn-primary" id="checkout-btn">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2025 OldMoneyMart. Crafted with passion.</p>
+  </footer>
+  <script src="products.js"></script>
+  <script src="cart.js"></script>
+  <script src="themes.js"></script>
+  <script src="3d/product-viewer.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
