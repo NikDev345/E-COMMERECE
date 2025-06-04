@@ -1,34 +1,54 @@
-// This is a placeholder for 3D product view
+// product-viewer.js
+
+let viewerScene, viewerCamera, viewerRenderer, viewerControls, viewerModel;
+
 function load3DModel(modelPath) {
   const container = document.getElementById("product-3d-viewer");
+
+  // Clear previous canvas if exists
   container.innerHTML = "";
-  // Setup Three.js scene
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf9f8f6);
-  const camera = new THREE.PerspectiveCamera(60, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-  camera.position.set(0, 1, 3);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.offsetWidth, container.offsetHeight);
-  container.appendChild(renderer.domElement);
+  // Scene setup
+  viewerScene = new THREE.Scene();
+  viewerCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+  viewerCamera.position.set(0, 1.5, 3);
 
-  // Light
-  const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);
-  scene.add(light);
+  viewerRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  viewerRenderer.setSize(container.clientWidth, container.clientHeight);
+  container.appendChild(viewerRenderer.domElement);
 
-  // Placeholder geometry (replace with GLTFLoader for real 3D models)
-  const geometry = new THREE.TorusKnotGeometry(0.7, 0.23, 120, 12);
-  const material = new THREE.MeshStandardMaterial({ color: 0xb59e5f, metalness: 0.8, roughness: 0.3 });
-  const mesh = new THREE.Mesh(geometry, material);
-  scene.add(mesh);
+  // Lighting
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+  viewerScene.add(ambientLight);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7);
+  directionalLight.position.set(3, 5, 2);
+  viewerScene.add(directionalLight);
 
-  // Orbit Controls
-  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  // Controls
+  viewerControls = new THREE.OrbitControls(viewerCamera, viewerRenderer.domElement);
+  viewerControls.enableDamping = true;
 
-  function animate() {
-    mesh.rotation.y += 0.01;
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
-  }
-  animate();
+  // GLTF Loader
+  const loader = new THREE.GLTFLoader();
+  loader.load(
+    modelPath,
+    function (gltf) {
+      viewerModel = gltf.scene;
+      viewerModel.scale.set(1, 1, 1);
+      viewerScene.add(viewerModel);
+      animateViewer();
+    },
+    undefined,
+    function (error) {
+      console.error("Error loading 3D model:", error);
+      container.innerHTML = "<p style='color: var(--danger);'>3D model failed to load.</p>";
+    }
+  );
+}
+
+function animateViewer() {
+  requestAnimationFrame(animateViewer);
+  if (viewerModel) viewerModel.rotation.y += 0.002; // slow rotation
+  viewerControls.update();
+  viewerRenderer.render(viewerScene, viewerCamera);
 }
