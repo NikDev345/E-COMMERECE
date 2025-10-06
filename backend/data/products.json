@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Vintage Leather Wallet",
+    "description": "Hand-stitched Italian leather wallet",
+    "price": 129.99,
+    "image": "https://example.com/images/wallet.jpg",
+    "category": "accessories",
+    "stock": 24
+  },
+  {
+    "title": "Classic Wool Overcoat",
+    "description": "Tailored wool overcoat — timeless elegance",
+    "price": 349.0,
+    "image": "https://example.com/images/overcoat.jpg",
+    "category": "apparel",
+    "stock": 12
+  }
+]
